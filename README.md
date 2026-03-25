@@ -1,8 +1,15 @@
 # xiaodu_voice_control
 
-`xiaodu_voice_control` 是一个 Home Assistant 自定义集成，用来把要暴露给小度的设备列表、技能参数和已捕获的 `openUid` 统一交给独立服务 `xiaodu_voice_control_service`，再由服务完成 OAuth、设备发现、控制和查询。
+首先感谢 [`https://github.com/cnk700i/havcs`](https://github.com/cnk700i/havcs) 的代码贡献，本项目的思路，源自 `HAVCS` 的方案一自建技能。  
 
-这个仓库适合通过 **HACS 自定义仓库** 安装集成。
+`xiaodu_voice_control` 是一个 Home Assistant 自定义集成，用来把要暴露给小度的设备列表、技能参数和已捕获的 `openUid` 统一交给独立服务 `xiaodu_voice_control_service` ，再由服务完成 OAuth、设备发现、控制和查询。  
+
+这个仓库适合通过 **HACS 自定义仓库** 安装集成。  
+
+部署前提：
+
+- HA能通过 **HTTPS + 公网域名** 访问
+- 注册一个小度技能平台的账号，完成开发者认证，并新建一个 **智能家居** 技能（不要求完成备案和上线，技能状态是 **开发中** 即可）
 
 ## 项目结构
 

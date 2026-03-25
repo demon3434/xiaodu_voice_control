@@ -1,3 +1,5 @@
+![xiaodu_voice_control logo](./logo.svg)
+
 # xiaodu_voice_control
 
 首先感谢 [`https://github.com/cnk700i/havcs`](https://github.com/cnk700i/havcs) 的代码贡献，本项目的思路，源自 `HAVCS` 的方案一自建技能。  

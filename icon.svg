@@ -1,0 +1,19 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ibox" x1="46" y1="28" x2="212" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF6CC"/>
+      <stop offset="1" stop-color="#E0F2FE"/>
+    </linearGradient>
+    <linearGradient id="ihouse" x1="78" y1="66" x2="175" y2="177" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="224" height="224" rx="56" fill="url(#ibox)"/>
+  <path d="M70 114C70 82.52 95.52 57 127 57H129C160.48 57 186 82.52 186 114V170H70V114Z" fill="url(#ihouse)"/>
+  <path d="M88 170H168V190C168 198.837 160.837 206 152 206H104C95.1634 206 88 198.837 88 190V170Z" fill="#18314F"/>
+  <rect x="114" y="129" width="28" height="41" rx="14" fill="white"/>
+  <rect x="98" y="141" width="60" height="12" rx="6" fill="white"/>
+  <path d="M45 117C45 86.108 63.4321 60.6329 89.9116 48" stroke="#F59E0B" stroke-width="11" stroke-linecap="round"/>
+  <path d="M211 117C211 86.108 192.568 60.6329 166.088 48" stroke="#F59E0B" stroke-width="11" stroke-linecap="round"/>
+</svg>

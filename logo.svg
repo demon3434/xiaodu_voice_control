@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="88" y1="72" x2="424" y2="440" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7D6"/>
+      <stop offset="1" stop-color="#EAF5FF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="150" y1="126" x2="360" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0EA5E9"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="136" y1="118" x2="377" y2="343" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBBF24"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="112" fill="url(#bg)"/>
+
+  <circle cx="256" cy="256" r="142" fill="white" opacity="0.92"/>
+  <circle cx="256" cy="256" r="108" fill="url(#accent)" opacity="0.08"/>
+
+  <path d="M170 230C170 182.608 208.608 144 256 144C303.392 144 342 182.608 342 230V338H170V230Z" fill="url(#accent)"/>
+  <path d="M200 337H312V372C312 383.046 303.046 392 292 392H220C208.954 392 200 383.046 200 372V337Z" fill="#18314F"/>
+  <path d="M222 208C222 189.222 237.222 174 256 174C274.778 174 290 189.222 290 208V233H222V208Z" fill="white" opacity="0.95"/>
+  <rect x="238" y="274" width="36" height="64" rx="18" fill="white"/>
+  <rect x="214" y="294" width="84" height="16" rx="8" fill="white" opacity="0.92"/>
+
+  <path d="M133 233C133 191.026 158.325 154.97 194.511 139.135" stroke="url(#warm)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M104 233C104 176.938 137.821 128.785 186.24 107.627" stroke="url(#warm)" stroke-width="14" stroke-linecap="round" opacity="0.72"/>
+  <path d="M379 233C379 191.026 353.675 154.97 317.489 139.135" stroke="url(#warm)" stroke-width="18" stroke-linecap="round"/>
+  <path d="M408 233C408 176.938 374.179 128.785 325.76 107.627" stroke="url(#warm)" stroke-width="14" stroke-linecap="round" opacity="0.72"/>
+
+  <circle cx="392" cy="140" r="22" fill="#F59E0B" opacity="0.18"/>
+  <circle cx="141" cy="372" r="18" fill="#38BDF8" opacity="0.18"/>
+</svg>

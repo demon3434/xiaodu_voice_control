@@ -41,7 +41,7 @@ docker pull demon3434/xiaodu_voice_control_service:latest
 独立服务的完整部署说明，请看：
 
 - GitHub 代码仓库：[`https://github.com/demon3434/xiaodu_voice_control_service`](https://github.com/demon3434/xiaodu_voice_control_service)
-- Docker Hub 镜像仓库：[`demon3434/xiaodu_voice_control_service`](https://hub.docker.com/r/demon3434/xiaodu_voice_control_service)
+- Docker Hub 镜像仓库：[`https://hub.docker.com/r/demon3434/xiaodu_voice_control_service`](https://hub.docker.com/r/demon3434/xiaodu_voice_control_service)
 
 如果你已经把服务部署好了，并且浏览器可以打开：
 

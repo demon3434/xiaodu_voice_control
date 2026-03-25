@@ -30,7 +30,9 @@ xiaodu_voice_control/
 
 ## 一、先部署独立服务
 
-这个集成依赖独立服务容器，推荐直接使用 Docker Hub 镜像：
+这个集成依赖独立服务容器 `xiaodu_voice_control_service` 。
+
+推荐直接使用 Docker Hub 镜像：
 
 ```bash
 docker pull demon3434/xiaodu_voice_control_service:latest
@@ -38,8 +40,8 @@ docker pull demon3434/xiaodu_voice_control_service:latest
 
 独立服务的完整部署说明，请看：
 
+- GitHub 代码仓库：[`https://github.com/demon3434/xiaodu_voice_control_service`](https://github.com/demon3434/xiaodu_voice_control_service)
 - Docker Hub 镜像仓库：[`demon3434/xiaodu_voice_control_service`](https://hub.docker.com/r/demon3434/xiaodu_voice_control_service)
-- 服务代码仓库说明：你单独发布的 `xiaodu_voice_control_service` README
 
 如果你已经把服务部署好了，并且浏览器可以打开：
 
@@ -78,7 +80,7 @@ custom_components/xiaodu_voice_control
 
 ## 三、HA 配置
 
-本集成尽量只增加一个 include，不把大量配置直接堆进 `configuration.yaml`。
+本集成只增加一个 include，不把大量配置直接堆进 `configuration.yaml`。
 
 把下面这行加入 `configuration.yaml`：
 
@@ -88,9 +90,9 @@ xiaodu_voice_control: !include xiaodu_voice_control.yaml
 
 你也可以直接参考：
 
-- [examples/configuration.yaml.snippet](E:\code\GitHub\xiaodu_voice_control\examples\configuration.yaml.snippet)
+- [examples/configuration.yaml.snippet](https://github.com/demon3434/xiaodu_voice_control/blob/main/examples/xiaodu_voice_control.yaml.example)
 
-然后在 HA 配置根目录创建：
+然后在 HA 配置根目录创建 `xiaodu_voice_control.yaml` ：
 
 ```yaml
 service_url: http://127.0.0.1:8129
@@ -102,12 +104,12 @@ xiaodu_open_uids: []
 
 示例文件见：
 
-- [examples/xiaodu_voice_control.yaml.example](E:\code\GitHub\xiaodu_voice_control\examples\xiaodu_voice_control.yaml.example)
+- [examples/xiaodu_voice_control.yaml.example](https://github.com/demon3434/xiaodu_voice_control/blob/main/examples/xiaodu_voice_control.yaml.example)
 
 说明：
 
 - `service_url`
-  HA 集成访问独立服务的地址。通常是 `http://127.0.0.1:8129`
+  HA 集成访问独立服务 `xiaodu_voice_control_service` 的地址。如果与 HA 部署在同一台主机，可以写成 `http://127.0.0.1:8129`
 - `internal_api_token`
   HA 集成和独立服务之间的内部鉴权令牌，不是填给小度平台的
 - `xiaodu_skill_id`
@@ -229,5 +231,3 @@ HA 页面维护的是这份主文件，服务容器只保存运行副本。
 
 - 可通过 HACS 安装的 Home Assistant 集成
 - 面向集成用户的配置说明
-
-独立服务 `xiaodu_voice_control_service` 建议单独发布和维护，这样结构更清晰，也更适合 Docker Hub 分发。

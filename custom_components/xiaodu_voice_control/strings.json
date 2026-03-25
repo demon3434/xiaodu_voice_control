@@ -1,0 +1,13 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "XiaoDu Voice Control",
+        "description": "Configure the service URL for the standalone xiaodu voice control gateway.",
+        "data": {
+          "service_url": "Service URL"
+        }
+      }
+    }
+  }
+}

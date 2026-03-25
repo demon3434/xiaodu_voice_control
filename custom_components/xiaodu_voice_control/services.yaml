@@ -1,0 +1,3 @@
+sync_devices:
+  name: Sync devices
+  description: Push the current XiaoDu device list to the standalone service.

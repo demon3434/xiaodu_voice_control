@@ -1,0 +1,5 @@
+﻿service_url: http://127.0.0.1:8129
+internal_api_token: replace_with_random_long_token
+xiaodu_skill_id: replace_with_your_bot_id
+xiaodu_client_secret: replace_with_client_secret
+xiaodu_open_uids: []

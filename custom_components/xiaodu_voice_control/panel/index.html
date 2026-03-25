@@ -1,0 +1,1134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>小度语音设备</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #fff;
+      --line: #d8e1ec;
+      --line-strong: #c4d2e3;
+      --text: #18314f;
+      --muted: #60738a;
+      --primary: #0078d4;
+      --primary-dark: #005ea6;
+      --danger: #d83b01;
+      --danger-soft: #fff2ed;
+      --success: #107c10;
+      --info: #205493;
+      --overlay: rgba(16, 31, 51, 0.35);
+      --shadow: 0 12px 36px rgba(23, 53, 89, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(180deg, #eef4fb 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+    button, input, select { font: inherit; }
+    .shell { max-width: 1520px; margin: 0 auto; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .card-header, .toolbar, .filters, .table-wrap, .pagination, .footer-note, .status, .setup-panel {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .card-header { padding-top: 22px; padding-bottom: 10px; }
+    .card-title { margin: 0; font-size: 30px; font-weight: 700; }
+    .card-subtitle { margin: 10px 0 0; font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding-top: 0; padding-bottom: 16px; }
+    .filters {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr auto;
+      gap: 12px;
+      align-items: end;
+      padding-top: 0;
+      padding-bottom: 18px;
+    }
+    .setup-panel { padding-top: 0; padding-bottom: 18px; }
+    .setup-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #f9fbfe;
+      padding: 16px 18px;
+    }
+    .setup-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .hint-box {
+      padding: 12px 14px;
+      border: 1px dashed var(--line-strong);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 13px;
+    }
+    .field, .filter-field { display: flex; flex-direction: column; gap: 8px; }
+    label { font-size: 13px; font-weight: 600; color: var(--muted); }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #8cbbe8;
+      box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.10);
+    }
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #eef4fb; color: var(--text); }
+    .btn-success { background: #15a34a; color: #fff; }
+    .btn-success:hover { background: #12863d; }
+    .btn-warn { background: #fff4cc; color: #8a5a00; }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); }
+    .btn-inline { padding: 8px 12px; font-size: 13px; margin-right: 8px; margin-bottom: 8px; }
+    .status {
+      margin-bottom: 18px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      border-radius: 12px;
+      display: none;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .status.show { display: block; }
+    .status.info { background: #eef5fd; color: var(--info); }
+    .status.success { background: #edf8ed; color: var(--success); }
+    .status.error { background: var(--danger-soft); color: var(--danger); }
+    .muted { color: var(--muted); }
+    .mono-list { margin-top: 10px; min-height: 32px; }
+    .mono-list code, .chip {
+      display: inline-block;
+      margin: 0 8px 8px 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eef5fd;
+      color: var(--info);
+      font-size: 12px;
+    }
+    .table-wrap { overflow: auto; padding-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+    th { background: #f8fbff; color: var(--muted); font-weight: 700; }
+    th.id-col, td.id-col { width: 24%; }
+    th.name-col, td.name-col { width: 12%; }
+    th.type-col, td.type-col { width: 10%; }
+    th.entity-col, td.entity-col { width: 24%; }
+    th.actions-col, td.actions-col { width: 20%; }
+    th.ops-col, td.ops-col { width: 10%; }
+    .id-main { font-weight: 700; font-size: 15px; }
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      margin: 0 6px 6px 0;
+      border-radius: 999px;
+      background: #eef5fd;
+      color: var(--info);
+      font-size: 12px;
+    }
+    .footer-note { padding-bottom: 24px; color: var(--muted); line-height: 1.7; font-size: 13px; }
+    .capability-box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfdff;
+      padding: 12px 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .capability-empty {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .capability-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid #e7eef7;
+    }
+    .capability-option input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 2px 0 0;
+      flex: 0 0 auto;
+    }
+    .capability-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .capability-code {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      word-break: break-all;
+    }
+    .capability-hint {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 24px;
+    }
+    .drawer-shell, .modal-shell {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 9999;
+    }
+    .drawer-shell.show, .modal-shell.show { display: block; }
+    .drawer-backdrop, .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay);
+    }
+    .drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(560px, 100vw);
+      height: 100%;
+      background: #fff;
+      border-left: 1px solid var(--line);
+      box-shadow: -20px 0 40px rgba(23, 53, 89, 0.12);
+      transform: translateX(100%);
+      transition: transform .22s ease;
+      overflow: auto;
+    }
+    .drawer-shell.show .drawer { transform: translateX(0); }
+    .drawer-header {
+      padding: 20px 24px 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .drawer-title { margin: 0; font-size: 24px; font-weight: 700; }
+    .drawer-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #eef4fb;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      padding: 0;
+    }
+    .form { padding: 0 24px 24px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .field.full { grid-column: 1 / -1; }
+    .modal-card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(620px, calc(100vw - 32px));
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: 0 26px 60px rgba(16, 31, 51, 0.22);
+      overflow: hidden;
+      max-height: calc(100vh - 40px);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .modal-header-main {
+      flex: 1;
+      padding: 20px 24px 16px;
+      background: #fff;
+      border-bottom: 1px solid #f1d9cf;
+    }
+    .modal-danger-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      margin-bottom: 12px;
+      border-radius: 999px;
+      background: rgba(216, 59, 1, 0.10);
+      color: #b02700;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .modal-danger-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(216, 59, 1, 0.12);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .modal-title { margin: 0; font-size: 24px; font-weight: 700; color: #b02700; }
+    .modal-subtitle { margin: 8px 0 0; color: #7c3b25; font-size: 14px; line-height: 1.7; }
+    .modal-body { padding: 0 24px 20px; }
+    .config-modal .modal-body {
+      overflow-y: auto;
+      padding-bottom: 12px;
+    }
+    .config-modal .modal-footer {
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+    .delete-summary {
+      border: 1px solid #f1d9cf;
+      border-radius: 18px;
+      background: #fffaf8;
+      overflow: hidden;
+    }
+    .delete-summary-head {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 18px 16px;
+      border-bottom: 1px solid #ffe4d9;
+    }
+    .delete-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: #ffe1d5;
+      color: var(--danger);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .delete-heading { margin: 0; font-size: 18px; font-weight: 700; }
+    .delete-copy { margin: 8px 0 0; color: #8a543f; line-height: 1.7; }
+    .delete-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 10px 14px;
+      padding: 18px;
+      align-items: center;
+    }
+    .delete-label { color: #8a543f; font-weight: 700; }
+    .delete-value { color: var(--text); font-weight: 600; }
+    .config-modal .modal-card {
+      width: min(760px, calc(100vw - 32px));
+    }
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+    }
+    .config-grid .field.full { grid-column: 1 / -1; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="card">
+      <div class="card-header">
+        <h1 class="card-title">小度语音设备</h1>
+        <p class="card-subtitle">在这里维护要暴露给小度的设备列表，并把 botID、已捕获的 openUid 和设备清单同步到独立服务容器。</p>
+      </div>
+      <div class="toolbar">
+        <button class="btn btn-primary" id="add-empty">新建设备</button>
+        <button class="btn btn-success" id="sync-devices">同步设备</button>
+        <button class="btn btn-warn" id="open-service-config">配置服务</button>
+        <span class="muted" id="service-url"></span>
+      </div>
+      <div class="setup-panel" style="display:none;">
+        <div class="setup-box">
+          <div class="setup-grid">
+            <div>
+              <div class="field">
+                <label for="xiaodu-skill-id">小度技能 ID / botID</label>
+                <input id="xiaodu-skill-id" placeholder="例如：9b77f681-9179-e7df-d556-45c05d43b2d0">
+              </div>
+              <div class="toolbar" style="padding:12px 0 0;">
+                <button class="btn btn-secondary" id="save-platform-config">保存小度配置</button>
+                <span class="muted" id="open-uid-summary"></span>
+              </div>
+            </div>
+            <div class="hint-box">
+              <div><strong>获取提示</strong></div>
+              <div>1. `botID` 可在小度技能平台“基础信息”页面查看，也可在模拟测试请求报文里查看 `debug.bot.id`。</div>
+              <div>2. `openUid` 不需要手填。重新授权后，在小度 App 或模拟测试里触发“发现设备”或真实控制，请求到达服务后会自动记录。</div>
+              <div>3. 每次 Home Assistant 加载集成、或点击“同步到服务”时，都会把 `botID/openUid/设备列表` 推送到服务容器并立即生效。</div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:12px;">
+            <label>已捕获的 openUid</label>
+            <div class="mono-list" id="open-uid-list"></div>
+          </div>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="filter-field">
+          <label for="filter-type">按类型筛选</label>
+          <select id="filter-type">
+            <option value="">全部类型</option>
+            <option value="switch">switch</option>
+            <option value="light">light</option>
+            <option value="cover">cover</option>
+            <option value="sensor">sensor</option>
+            <option value="fan">fan</option>
+            <option value="climate">climate</option>
+          </select>
+        </div>
+        <div class="filter-field">
+          <label for="filter-name">按名称关键字查询</label>
+          <input id="filter-name" placeholder="例如：自习台灯">
+        </div>
+        <div class="filter-field">
+          <label for="filter-entity">按实体 ID 查询</label>
+          <input id="filter-entity" placeholder="例如：switch.zdc1_plug3_84f3eb9d9d1d">
+        </div>
+        <div class="filter-field">
+          <button class="btn btn-secondary" id="clear-filters">清空筛选</button>
+        </div>
+      </div>
+      <div class="status info" id="status"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="id-col">设备 ID</th>
+              <th class="name-col">名称</th>
+              <th class="type-col">类型</th>
+              <th class="entity-col">HA 实体</th>
+              <th class="actions-col">能力</th>
+              <th class="ops-col">操作</th>
+            </tr>
+          </thead>
+          <tbody id="device-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <span class="muted" id="page-info"></span>
+          <label class="muted" for="page-size" style="display:flex;align-items:center;gap:8px;">
+            每页
+            <select id="page-size" style="width:auto;min-width:88px;padding:8px 12px;">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+            条
+          </label>
+        </div>
+        <div>
+          <button class="btn btn-secondary" id="prev-page">上一页</button>
+          <button class="btn btn-secondary" id="next-page">下一页</button>
+        </div>
+      </div>
+      <div class="footer-note">
+        设备列表写入 Home Assistant 配置根目录下的 <code>xiaodu_voice_control_devices.yaml</code>，
+        平台参数与自动捕获的用户标识写入 <code>xiaodu_voice_control.yaml</code>。
+      </div>
+    </section>
+  </div>
+
+  <div class="drawer-shell" id="drawer-shell" aria-hidden="true">
+    <div class="drawer-backdrop" id="drawer-backdrop"></div>
+    <aside class="drawer" aria-modal="true" role="dialog" aria-labelledby="editor-title">
+      <div class="drawer-header">
+        <div>
+          <h2 class="drawer-title" id="editor-title">新增或编辑设备</h2>
+          <p class="card-subtitle">根据设备类型勾选要暴露给小度的动作和属性，避免手工输入拼写错误。</p>
+        </div>
+        <button class="btn drawer-close" id="drawer-close" aria-label="关闭">×</button>
+      </div>
+      <div class="form">
+        <div class="grid">
+          <div class="field">
+            <label for="appliance_id">设备 ID</label>
+            <input id="appliance_id" placeholder="duvcs.switch.dc1_1_2">
+          </div>
+          <div class="field">
+            <label for="name">名称</label>
+            <input id="name" placeholder="测试">
+          </div>
+          <div class="field">
+            <label for="type">类型</label>
+            <select id="type">
+              <option value="switch">switch</option>
+              <option value="light">light</option>
+              <option value="cover">cover</option>
+              <option value="sensor">sensor</option>
+              <option value="fan">fan</option>
+              <option value="climate">climate</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="entity_id">HA 实体 ID</label>
+            <input id="entity_id" placeholder="switch.zdc1_plug2_84f3eb9e1886">
+          </div>
+          <div class="field full">
+            <label>动作列表</label>
+            <div id="actions-options" class="capability-box"></div>
+          </div>
+          <div class="field full">
+            <label>属性列表</label>
+            <div id="properties-options" class="capability-box"></div>
+          </div>
+        </div>
+        <div class="toolbar" style="padding:16px 0 0;">
+          <button class="btn btn-primary" id="save-device">保存设备</button>
+          <button class="btn btn-secondary" id="reset-form">清空表单</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-shell" id="delete-modal-shell" aria-hidden="true">
+    <div class="modal-backdrop" id="delete-modal-backdrop"></div>
+    <section class="modal-card" aria-modal="true" role="dialog" aria-labelledby="delete-modal-title">
+      <div class="modal-header">
+        <div class="modal-header-main">
+          <div class="modal-danger-chip"><span class="modal-danger-icon">!</span>危险操作</div>
+          <h2 class="modal-title" id="delete-modal-title">删除设备</h2>
+          <p class="modal-subtitle">删除后会从 <code>xiaodu_voice_control_devices.yaml</code> 中移除这条记录。确认前请核对设备信息，避免误删。</p>
+        </div>
+        <button class="btn drawer-close" id="delete-modal-close" aria-label="关闭" style="margin:16px 16px 0 0;">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="delete-summary">
+          <div class="delete-summary-head">
+            <div class="delete-badge">!</div>
+            <div>
+              <h3 class="delete-heading" id="delete-device-name">待删除设备</h3>
+              <p class="delete-copy">这一步会立即写回配置文件。删除后如果已经同步到服务，建议再点一次“同步到服务”。</p>
+            </div>
+          </div>
+          <div class="delete-grid">
+            <div class="delete-label">设备 ID</div>
+            <div class="delete-value"><code id="delete-device-id"></code></div>
+            <div class="delete-label">设备名称</div>
+            <div class="delete-value" id="delete-device-display-name"></div>
+            <div class="delete-label">HA 实体 ID</div>
+            <div class="delete-value"><code id="delete-device-entity"></code></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="delete-cancel">取消</button>
+        <button class="btn btn-danger" id="delete-confirm">确认删除</button>
+      </div>
+    </section>
+  </div>
+  <div class="modal-shell config-modal" id="config-modal-shell" aria-hidden="true">
+    <div class="modal-backdrop" id="config-modal-backdrop"></div>
+    <section class="modal-card" aria-modal="true" role="dialog" aria-labelledby="config-modal-title">
+      <div class="modal-header">
+        <div class="modal-header-main">
+          <h2 class="modal-title" id="config-modal-title" style="color:#18314f;">配置服务</h2>
+          <p class="modal-subtitle" style="color:#5d7088;">在这里维护 HA 与 `xiaodu_voice_control_service` 共享的运行时配置。保存后会立即推送到服务容器。</p>
+        </div>
+        <button class="btn drawer-close" id="config-modal-close" aria-label="关闭" style="margin:16px 16px 0 0;">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="config-grid">
+          <div class="field">
+            <label for="config-service-url">服务地址</label>
+            <input id="config-service-url" placeholder="http://127.0.0.1:8129">
+          </div>
+          <div class="field">
+            <label for="config-skill-id">小度技能 ID / botID</label>
+            <input id="config-skill-id" placeholder="例如：9b77f681-9179-e7df-d556-45c05d43b2d0">
+          </div>
+          <div class="field">
+            <label for="config-client-secret">小度技能平台 ClientSecret</label>
+            <input id="config-client-secret" placeholder="请输入 ClientSecret">
+          </div>
+          <div class="field">
+            <label for="config-internal-token">internal_api_token</label>
+            <input id="config-internal-token" placeholder="HA 与服务容器内部鉴权令牌">
+          </div>
+          <div class="field full">
+            <label for="config-open-uids">openUid 列表</label>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <textarea id="config-open-uids" rows="4" style="flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--line);resize:vertical;" disabled></textarea>
+              <button class="btn btn-secondary" id="edit-open-uids" type="button">修改</button>
+            </div>
+          </div>
+        </div>
+        <div class="hint-box" style="margin-top:16px;">
+          <div>1. `服务地址` 是 HA 访问独立服务容器的地址。</div>
+          <div>2. `botID` 可在小度技能平台“基础信息”页面查看，也可在模拟测试请求报文里查看 `debug.bot.id`。</div>
+          <div>3. `ClientSecret` 与小度技能平台配置保持一致。</div>
+          <div>4. `openUid` 默认自动捕获。只有确实需要手工修正时，才点“修改”后编辑，一行一个。</div>
+          <div>5. `internal_api_token` 仅供 HA 集成和服务容器之间内部调用，不是给小度平台填的。</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="config-cancel">取消</button>
+        <button class="btn btn-primary" id="config-save">保存服务配置</button>
+      </div>
+    </section>
+  </div>
+  <script>
+    const statusEl = document.getElementById("status");
+    const tbodyEl = document.getElementById("device-tbody");
+    const serviceUrlEl = document.getElementById("service-url");
+    const skillIdEl = document.getElementById("xiaodu-skill-id");
+    const openUidListEl = document.getElementById("open-uid-list");
+    const openUidSummaryEl = document.getElementById("open-uid-summary");
+    const configModalShellEl = document.getElementById("config-modal-shell");
+    const configServiceUrlEl = document.getElementById("config-service-url");
+    const configSkillIdEl = document.getElementById("config-skill-id");
+    const configClientSecretEl = document.getElementById("config-client-secret");
+    const configInternalTokenEl = document.getElementById("config-internal-token");
+    const configOpenUidsEl = document.getElementById("config-open-uids");
+    const editOpenUidsEl = document.getElementById("edit-open-uids");
+    const editorTitleEl = document.getElementById("editor-title");
+    const drawerShellEl = document.getElementById("drawer-shell");
+    const filterTypeEl = document.getElementById("filter-type");
+    const filterNameEl = document.getElementById("filter-name");
+    const filterEntityEl = document.getElementById("filter-entity");
+    const pageInfoEl = document.getElementById("page-info");
+    const pageSizeEl = document.getElementById("page-size");
+    const prevPageEl = document.getElementById("prev-page");
+    const nextPageEl = document.getElementById("next-page");
+    const deleteModalShellEl = document.getElementById("delete-modal-shell");
+    const deleteDeviceNameEl = document.getElementById("delete-device-name");
+    const deleteDeviceIdEl = document.getElementById("delete-device-id");
+    const deleteDeviceDisplayNameEl = document.getElementById("delete-device-display-name");
+    const deleteDeviceEntityEl = document.getElementById("delete-device-entity");
+    const deleteConfirmEl = document.getElementById("delete-confirm");
+    const typeEl = document.getElementById("type");
+    const actionsOptionsEl = document.getElementById("actions-options");
+    const propertiesOptionsEl = document.getElementById("properties-options");
+    const formIds = ["appliance_id", "name", "type", "entity_id"];
+    let devices = [];
+    let filteredDevices = [];
+    let editingId = null;
+    let currentPage = 1;
+    let pageSize = 10;
+    let pendingDeleteId = null;
+    let openUidsEditable = false;
+
+    function showStatus(message, kind = "info") {
+      statusEl.textContent = message;
+      statusEl.className = `status ${kind} show`;
+    }
+
+    function clearStatus() {
+      statusEl.className = "status info";
+      statusEl.textContent = "";
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function parseCsv(value) {
+      return value.split(",").map((item) => item.trim()).filter(Boolean);
+    }
+
+    const capabilityText = {
+      turnOn: "打开设备",
+      turnOff: "关闭设备",
+      pause: "暂停动作",
+      setBrightnessPercentage: "设置亮度百分比",
+      setTemperature: "设置目标温度",
+      incrementTemperature: "调高温度",
+      decrementTemperature: "调低温度",
+      turnOnState: "查询当前开关状态",
+      brightness: "查询亮度",
+      openPercent: "查询窗帘开合百分比",
+      temperatureReading: "查询温度读数",
+      humidity: "查询湿度读数",
+      pm25: "查询 PM2.5",
+      pm10: "查询 PM10",
+      co2: "查询二氧化碳浓度",
+    };
+
+    const capabilityCatalog = {
+      switch: {
+        actions: ["turnOn", "turnOff"],
+        properties: ["turnOnState"],
+      },
+      light: {
+        actions: ["turnOn", "turnOff", "setBrightnessPercentage"],
+        properties: ["turnOnState", "brightness"],
+      },
+      cover: {
+        actions: ["turnOn", "turnOff", "pause"],
+        properties: ["turnOnState", "openPercent"],
+      },
+      fan: {
+        actions: ["turnOn", "turnOff"],
+        properties: ["turnOnState"],
+      },
+      climate: {
+        actions: ["turnOn", "turnOff", "setTemperature", "incrementTemperature", "decrementTemperature"],
+        properties: ["turnOnState", "temperatureReading", "humidity"],
+      },
+      sensor: {
+        actions: [],
+        properties: ["temperatureReading", "humidity", "brightness", "pm25", "pm10", "co2"],
+      },
+    };
+
+    function getCheckedValues(groupName) {
+      return Array.from(document.querySelectorAll(`input[name="${groupName}"]:checked`)).map((input) => input.value);
+    }
+
+    function renderCapabilityGroup(container, groupName, options, selectedValues) {
+      if (!options.length) {
+        container.innerHTML = '<div class="capability-empty">当前类型通常不需要主动控制项，可只暴露查询属性。</div>';
+        return;
+      }
+      container.innerHTML = options.map((value) => `
+        <label class="capability-option">
+          <input type="checkbox" name="${groupName}" value="${value}" ${selectedValues.includes(value) ? "checked" : ""}>
+          <span class="capability-meta">
+            <span class="capability-code">${value}</span>
+            <span class="capability-hint">${capabilityText[value] || "按小度协议原样输出"}</span>
+          </span>
+        </label>
+      `).join("");
+    }
+
+    function renderCapabilitySelectors(selectedActions = [], selectedProperties = []) {
+      const type = typeEl.value.trim() || "switch";
+      const config = capabilityCatalog[type] || capabilityCatalog.switch;
+      renderCapabilityGroup(actionsOptionsEl, "device-actions", config.actions, selectedActions);
+      renderCapabilityGroup(propertiesOptionsEl, "device-properties", config.properties, selectedProperties);
+    }
+
+    function openDrawer() {
+      drawerShellEl.classList.add("show");
+      drawerShellEl.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDrawer() {
+      drawerShellEl.classList.remove("show");
+      drawerShellEl.setAttribute("aria-hidden", "true");
+    }
+
+    function openDeleteModal(device) {
+      pendingDeleteId = device.appliance_id;
+      deleteDeviceNameEl.textContent = `确认删除“${device.name || device.appliance_id}”吗？`;
+      deleteDeviceIdEl.textContent = device.appliance_id || "-";
+      deleteDeviceDisplayNameEl.textContent = device.name || "-";
+      deleteDeviceEntityEl.textContent = device.entity_id || "-";
+      deleteModalShellEl.classList.add("show");
+      deleteModalShellEl.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDeleteModal() {
+      pendingDeleteId = null;
+      deleteModalShellEl.classList.remove("show");
+      deleteModalShellEl.setAttribute("aria-hidden", "true");
+    }
+
+    function openConfigModal() {
+      configModalShellEl.classList.add("show");
+      configModalShellEl.setAttribute("aria-hidden", "false");
+    }
+
+    function closeConfigModal() {
+      configModalShellEl.classList.remove("show");
+      configModalShellEl.setAttribute("aria-hidden", "true");
+    }
+
+    function setOpenUidEditable(editable) {
+      openUidsEditable = editable;
+      configOpenUidsEl.disabled = !editable;
+      editOpenUidsEl.textContent = editable ? "锁定" : "修改";
+    }
+
+    function getHaAccessToken() {
+      try {
+        const root =
+          window.parent?.document?.querySelector("body > home-assistant") ||
+          window.parent?.document?.querySelector("home-assistant");
+        const hass = root?.hass || root?.shadowRoot?.querySelector("home-assistant-main")?.hass;
+        return hass?.auth?.data?.accessToken || hass?.auth?.data?.access_token || hass?.auth?.accessToken || "";
+      } catch (error) {
+        return "";
+      }
+    }
+
+    async function readJson(response) {
+      const text = await response.text();
+      try {
+        return text ? JSON.parse(text) : {};
+      } catch (error) {
+        throw new Error(`接口没有返回合法 JSON。\n状态码: ${response.status}\n响应内容: ${text.slice(0, 300)}`);
+      }
+    }
+
+    async function fetchJson(url, options = {}) {
+      const headers = new Headers(options.headers || {});
+      const token = getHaAccessToken();
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      const response = await fetch(url, { ...options, headers });
+      const payload = await readJson(response);
+      if (!response.ok) {
+        throw new Error(payload.error || payload.message || JSON.stringify(payload));
+      }
+      return payload;
+    }
+
+    function renderOpenUids(openUids) {
+      openUidSummaryEl.textContent = openUids.length ? `已捕获 ${openUids.length} 个 openUid` : "尚未捕获 openUid";
+      openUidListEl.innerHTML = openUids.length
+        ? openUids.map((item) => `<code>${escapeHtml(item)}</code>`).join("")
+        : '<span class="muted">重新授权后，触发一次“发现设备”或真实控制，系统会自动记录 openUid。</span>';
+    }
+
+    async function loadConfig() {
+      const payload = await fetchJson("/api/xiaodu_voice_control/config");
+      serviceUrlEl.textContent = `服务地址：${payload.service_url}；设备文件：${payload.devices_yaml}`;
+      skillIdEl.value = payload.xiaodu_skill_id || "";
+      configServiceUrlEl.value = payload.service_url || "";
+      configSkillIdEl.value = payload.xiaodu_skill_id || "";
+      configClientSecretEl.value = payload.xiaodu_client_secret || "";
+      configInternalTokenEl.value = payload.internal_api_token || "";
+      configOpenUidsEl.value = (payload.open_uids || []).join("\n");
+      setOpenUidEditable(false);
+      renderOpenUids(payload.open_uids || []);
+    }
+
+    async function savePlatformConfig() {
+      clearStatus();
+      try {
+        const payload = await fetchJson("/api/xiaodu_voice_control/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            service_url: configServiceUrlEl.value.trim(),
+            xiaodu_skill_id: configSkillIdEl.value.trim(),
+            xiaodu_client_secret: configClientSecretEl.value.trim(),
+            internal_api_token: configInternalTokenEl.value.trim(),
+            xiaodu_open_uids: configOpenUidsEl.value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
+          }),
+        });
+        serviceUrlEl.textContent = `服务地址：${payload.service_url}；设备文件：xiaodu_voice_control_devices.yaml`;
+        skillIdEl.value = payload.xiaodu_skill_id || "";
+        configSkillIdEl.value = payload.xiaodu_skill_id || "";
+        configClientSecretEl.value = payload.xiaodu_client_secret || configClientSecretEl.value;
+        configInternalTokenEl.value = payload.internal_api_token || configInternalTokenEl.value;
+        configOpenUidsEl.value = (payload.open_uids || []).join("\n");
+        renderOpenUids(payload.open_uids || []);
+        setOpenUidEditable(false);
+        closeConfigModal();
+        showStatus("小度配置已保存，并已推送到服务容器。", "success");
+      } catch (error) {
+        showStatus(`保存小度配置失败：${error.message}`, "error");
+      }
+    }
+
+    async function loadDevices() {
+      const payload = await fetchJson("/api/xiaodu_voice_control/devices");
+      devices = payload.devices || [];
+      filteredDevices = [...devices];
+      renderDevices();
+    }
+
+    function formValue() {
+      return {
+        appliance_id: document.getElementById("appliance_id").value.trim(),
+        name: document.getElementById("name").value.trim(),
+        type: document.getElementById("type").value.trim(),
+        entity_id: document.getElementById("entity_id").value.trim(),
+        actions: getCheckedValues("device-actions"),
+        properties: getCheckedValues("device-properties"),
+      };
+    }
+
+    function fillForm(device) {
+      editingId = device.appliance_id;
+      editorTitleEl.textContent = `编辑设备：${device.name}`;
+      document.getElementById("appliance_id").value = device.appliance_id;
+      document.getElementById("name").value = device.name;
+      document.getElementById("type").value = device.type;
+      document.getElementById("entity_id").value = device.entity_id;
+      renderCapabilitySelectors(device.actions || [], device.properties || []);
+      openDrawer();
+    }
+
+    function resetForm() {
+      editingId = null;
+      editorTitleEl.textContent = "新增或编辑设备";
+      formIds.forEach((id) => {
+        const el = document.getElementById(id);
+        el.value = id === "type" ? "switch" : "";
+      });
+      renderCapabilitySelectors(["turnOn", "turnOff"], ["turnOnState"]);
+    }
+
+    function renderTags(items) {
+      if (!items || items.length === 0) {
+        return '<span class="muted">无</span>';
+      }
+      return items.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("");
+    }
+
+    function applyFilters() {
+      const type = filterTypeEl.value.trim().toLowerCase();
+      const nameKeyword = filterNameEl.value.trim().toLowerCase();
+      const entityKeyword = filterEntityEl.value.trim().toLowerCase();
+      filteredDevices = devices.filter((device) => {
+        if (type && String(device.type).toLowerCase() !== type) return false;
+        if (nameKeyword && !String(device.name || "").toLowerCase().includes(nameKeyword)) return false;
+        if (entityKeyword && !String(device.entity_id || "").toLowerCase().includes(entityKeyword)) return false;
+        return true;
+      });
+      currentPage = 1;
+      renderDevices();
+    }
+
+    function pagedDevices() {
+      const start = (currentPage - 1) * pageSize;
+      return filteredDevices.slice(start, start + pageSize);
+    }
+
+    function renderPagination() {
+      const total = filteredDevices.length;
+      const totalPages = Math.max(1, Math.ceil(total / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = total === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+      const end = Math.min(currentPage * pageSize, total);
+      pageInfoEl.textContent = `共 ${total} 个设备，当前第 ${currentPage}/${totalPages} 页，显示 ${start}-${end}，每页 ${pageSize} 条`;
+      prevPageEl.disabled = currentPage <= 1;
+      nextPageEl.disabled = currentPage >= totalPages;
+    }
+
+    function renderDevices() {
+      tbodyEl.innerHTML = "";
+      const currentItems = pagedDevices();
+      if (currentItems.length === 0) {
+        tbodyEl.innerHTML = '<tr><td colspan="6" class="muted">没有符合条件的设备。</td></tr>';
+        renderPagination();
+        return;
+      }
+      currentItems.forEach((device) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="id-col"><div class="id-main">${escapeHtml(device.appliance_id)}</div></td>
+          <td class="name-col">${escapeHtml(device.name)}</td>
+          <td class="type-col">${escapeHtml(device.type)}</td>
+          <td class="entity-col">${escapeHtml(device.entity_id)}</td>
+          <td class="actions-col">${renderTags(device.actions)}${renderTags(device.properties)}</td>
+          <td class="ops-col">
+            <button class="btn btn-secondary btn-inline" data-edit="${escapeHtml(device.appliance_id)}">编辑</button>
+            <button class="btn btn-danger btn-inline" data-delete="${escapeHtml(device.appliance_id)}">删除</button>
+          </td>
+        `;
+        tbodyEl.appendChild(tr);
+      });
+      tbodyEl.querySelectorAll("[data-edit]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const device = devices.find((item) => item.appliance_id === button.dataset.edit);
+          if (device) fillForm(device);
+        });
+      });
+      tbodyEl.querySelectorAll("[data-delete]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const device = devices.find((item) => item.appliance_id === button.dataset.delete);
+          if (device) openDeleteModal(device);
+        });
+      });
+      renderPagination();
+    }
+
+    async function saveDevice() {
+      clearStatus();
+      const payload = formValue();
+      if (!payload.appliance_id || !payload.name || !payload.type || !payload.entity_id) {
+        showStatus("设备 ID、名称、类型、实体 ID 不能为空。", "error");
+        return;
+      }
+      try {
+        await fetchJson("/api/xiaodu_voice_control/devices", {
+          method: editingId ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        showStatus(`设备 ${payload.name} 已保存。`, "success");
+        await loadDevices();
+        applyFilters();
+        resetForm();
+        closeDrawer();
+      } catch (error) {
+        showStatus(`保存失败：${error.message}`, "error");
+      }
+    }
+
+    async function confirmDelete() {
+      if (!pendingDeleteId) return;
+      deleteConfirmEl.disabled = true;
+      try {
+        await fetchJson("/api/xiaodu_voice_control/devices", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ appliance_id: pendingDeleteId }),
+        });
+        showStatus(`已删除设备 ${pendingDeleteId}`, "success");
+        await loadDevices();
+        applyFilters();
+        closeDeleteModal();
+      } catch (error) {
+        showStatus(`删除失败：${error.message}`, "error");
+      } finally {
+        deleteConfirmEl.disabled = false;
+      }
+    }
+
+    function formatSyncStatus(payload) {
+      const settings = payload?.settings || {};
+      const deviceSync = payload?.device_sync || {};
+      const openUidCount = (settings.open_uids || []).length;
+      if (!deviceSync.status) {
+        return `已推送 ${payload.count} 个设备到本地服务。\n当前 botID：${settings.xiaodu_skill_id || "未设置"}\n已记录 openUid：${openUidCount} 个`;
+      }
+      if (deviceSync.status === "skipped") {
+        return `已推送 ${payload.count} 个设备到本地服务。\n当前 botID：${settings.xiaodu_skill_id || "未设置"}\n已记录 openUid：${openUidCount} 个\n小度云端同步未执行：${deviceSync.reason || "未知原因"}`;
+      }
+      const first = (deviceSync.results || [])[0];
+      if (!first) {
+        return `已推送 ${payload.count} 个设备到本地服务。\n当前 botID：${settings.xiaodu_skill_id || "未设置"}\n已记录 openUid：${openUidCount} 个\n小度云端同步状态：${deviceSync.status}`;
+      }
+      const response = first.response || {};
+      const statusText = response.status !== undefined ? `status=${response.status}` : `http=${first.status_code}`;
+      const msgText = response.msg ? `，msg=${response.msg}` : "";
+      return `已推送 ${payload.count} 个设备到本地服务。\n当前 botID：${settings.xiaodu_skill_id || "未设置"}\n已记录 openUid：${openUidCount} 个\n小度云端同步：${statusText}${msgText}`;
+    }
+
+    async function syncDevices() {
+      showStatus("正在同步设备到服务容器，请稍候…", "info");
+      try {
+        const payload = await fetchJson("/api/xiaodu_voice_control/sync", { method: "POST" });
+        renderOpenUids((payload.settings || {}).open_uids || []);
+        const message = formatSyncStatus(payload);
+        const kind = payload?.device_sync?.status === "ok" ? "success" : "info";
+        showStatus(message, kind);
+      } catch (error) {
+        showStatus(`同步失败：${error.message}`, "error");
+      }
+    }
+
+    document.getElementById("save-device").addEventListener("click", saveDevice);
+    document.getElementById("reset-form").addEventListener("click", resetForm);
+    document.getElementById("save-platform-config").addEventListener("click", savePlatformConfig);
+    document.getElementById("open-service-config").addEventListener("click", openConfigModal);
+    document.getElementById("sync-devices").addEventListener("click", syncDevices);
+    document.getElementById("add-empty").addEventListener("click", () => { resetForm(); openDrawer(); });
+    document.getElementById("drawer-close").addEventListener("click", closeDrawer);
+    document.getElementById("drawer-backdrop").addEventListener("click", closeDrawer);
+    document.getElementById("config-modal-close").addEventListener("click", closeConfigModal);
+    document.getElementById("config-modal-backdrop").addEventListener("click", closeConfigModal);
+    document.getElementById("config-cancel").addEventListener("click", closeConfigModal);
+    document.getElementById("config-save").addEventListener("click", savePlatformConfig);
+    editOpenUidsEl.addEventListener("click", () => setOpenUidEditable(!openUidsEditable));
+    document.getElementById("delete-modal-close").addEventListener("click", closeDeleteModal);
+    document.getElementById("delete-modal-backdrop").addEventListener("click", closeDeleteModal);
+    document.getElementById("delete-cancel").addEventListener("click", closeDeleteModal);
+    document.getElementById("delete-confirm").addEventListener("click", confirmDelete);
+    document.getElementById("clear-filters").addEventListener("click", () => {
+      filterTypeEl.value = "";
+      filterNameEl.value = "";
+      filterEntityEl.value = "";
+      applyFilters();
+    });
+    filterTypeEl.addEventListener("change", applyFilters);
+    filterNameEl.addEventListener("input", applyFilters);
+    filterEntityEl.addEventListener("input", applyFilters);
+    prevPageEl.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage -= 1;
+        renderDevices();
+      }
+    });
+    nextPageEl.addEventListener("click", () => {
+      const totalPages = Math.max(1, Math.ceil(filteredDevices.length / pageSize));
+      if (currentPage < totalPages) {
+        currentPage += 1;
+        renderDevices();
+      }
+    });
+    pageSizeEl.addEventListener("change", () => {
+      pageSize = Number(pageSizeEl.value) || 10;
+      currentPage = 1;
+      renderDevices();
+    });
+    typeEl.addEventListener("change", () => {
+      renderCapabilitySelectors(getCheckedValues("device-actions"), getCheckedValues("device-properties"));
+    });
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        if (deleteModalShellEl.classList.contains("show")) {
+          closeDeleteModal();
+          return;
+        }
+        closeDrawer();
+      }
+    });
+
+    resetForm();
+    Promise.all([loadConfig(), loadDevices()]).catch((error) => {
+      showStatus(`初始化失败：${error.message}`, "error");
+    });
+  </script>
+</body>
+</html>

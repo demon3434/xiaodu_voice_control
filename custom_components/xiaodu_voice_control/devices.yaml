@@ -1,0 +1,386 @@
+devices:
+  - appliance_id: havcs.tc1_1_1
+    name: 小钢炮
+    type: switch
+    entity_id: switch.ztc1_1_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_1_2
+    name: 电视开关
+    type: switch
+    entity_id: switch.ztc1_2_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_1_3
+    name: 闲置电脑电源线
+    type: switch
+    entity_id: switch.ztc1_3_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_1_4
+    name: 乌鸦
+    type: switch
+    entity_id: switch.ztc1_4_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_1_5
+    name: 灰色充电器
+    type: switch
+    entity_id: switch.ztc1_5_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_1_6
+    name: 白色机顶盒
+    type: switch
+    entity_id: switch.ztc1_6_d0bae463c9d3
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_1
+    name: 按摩店
+    type: switch
+    entity_id: switch.ztc1_1_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_2
+    name: 白色电视盒
+    type: switch
+    entity_id: switch.ztc1_2_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_3
+    name: 牙膏厂
+    type: switch
+    entity_id: switch.ztc1_3_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_4
+    name: 小青蛙
+    type: switch
+    entity_id: switch.ztc1_4_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_5
+    name: 小电脑
+    type: switch
+    entity_id: switch.ztc1_5_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.tc1_2_6
+    name: 黑苹果
+    type: switch
+    entity_id: switch.ztc1_6_d0bae463d89e
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.dc1_1_0
+    name: 接线板
+    type: switch
+    entity_id: switch.zdc1_plug0_84f3eb9e1886
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.dc1_1_1
+    name: 白河村
+    type: switch
+    entity_id: switch.zdc1_plug1_84f3eb9e1886
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.dc1_1_2
+    name: 黑色充电器
+    type: switch
+    entity_id: switch.zdc1_plug2_84f3eb9e1886
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.dc1_1_3
+    name: 小老鼠
+    type: switch
+    entity_id: switch.zdc1_plug3_84f3eb9e1886
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.wol_m910q
+    name: 黑色小铁盒
+    type: switch
+    entity_id: switch.lian_xiang_m910qmo_gai_xiao_zhu_ji
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.light_rgbw_3fa035
+    name: 火灾
+    type: light
+    entity_id: light.controller_rgbw_3fa035
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+      - brightness
+
+  - appliance_id: havcs.light_rgbw_3f9b63
+    name: 青青草原
+    type: light
+    entity_id: light.controller_rgbw_3f9b63
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+      - brightness
+
+  - appliance_id: havcs.light_rgbw_3f9f75
+    name: 小星星
+    type: light
+    entity_id: light.controller_rgbw_3f9f75
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+      - brightness
+
+  - appliance_id: havcs.light_rgbw_3f404d
+    name: 电竞显示器
+    type: light
+    entity_id: light.controller_rgbw_3f404d
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+      - brightness
+
+  - appliance_id: havcs.light_rgbw_f92352
+    name: 饭盒灯
+    type: light
+    entity_id: light.controller_rgbw_f92352
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+      - brightness
+
+  - appliance_id: havcs.fan_air_purifier_5f86
+    name: 小米空气净化器
+    type: fan
+    entity_id: fan.zhimi_m1_5f86_air_purifier
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.cover_xiaomi_cover_motor_ec4d3ed554e9
+    name: 大太阳
+    type: cover
+    entity_id: cover.ec4d3ed554e9_motor
+    actions:
+      - turnOn
+      - turnOff
+      - pause
+    properties:
+      - turnOnState
+      - openPercent
+
+  - appliance_id: havcs.cover_xiaomi_cover_motor_68abbc1b6a2b
+    name: 烧饼
+    type: cover
+    entity_id: cover.68abbc1b6a2b_motor
+    actions:
+      - turnOn
+      - turnOff
+      - pause
+    properties:
+      - turnOnState
+      - openPercent
+
+  - appliance_id: havcs.cover_xiaomi_cover_motor_68abbc4d8246
+    name: 油条
+    type: cover
+    entity_id: cover.68abbc4d8246_motor
+    actions:
+      - turnOn
+      - turnOff
+      - pause
+    properties:
+      - turnOnState
+      - openPercent
+
+  - appliance_id: havcs.dc1_2_3
+    name: 自习台灯
+    type: switch
+    entity_id: switch.zdc1_plug3_84f3eb9d9d1d
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.sensor_dht11_temperature_24a1603c67e5
+    name: 洗衣台温度
+    type: sensor
+    entity_id: sensor.esp8266_01s_24a1603c67e5_temperature
+    actions: []
+    properties:
+      - temperatureReading
+
+  - appliance_id: havcs.sensor_ds18b20_temperature_24a1603c667c
+    name: 弱电箱温度
+    type: sensor
+    entity_id: sensor.esp8266_01s_24a1603c667c_ds18b20_temperature
+    actions: []
+    properties:
+      - temperatureReading
+
+  - appliance_id: havcs.sensor_dht11_humidity_24a1603c67e5
+    name: 洗衣台湿度
+    type: sensor
+    entity_id: sensor.esp8266_01s_24a1603c67e5_humidity
+    actions: []
+    properties:
+      - humidity
+
+  - appliance_id: havcs.sensor_dht11_temperature_e8db84964042
+    name: 童童房间温度
+    type: sensor
+    entity_id: sensor.esp8266_d1mini_e8db84964042_temperature
+    actions: []
+    properties:
+      - temperatureReading
+
+  - appliance_id: havcs.sensor_dht11_humidity_e8db84964042
+    name: 童童房间湿度
+    type: sensor
+    entity_id: sensor.esp8266_d1mini_e8db84964042_humidity
+    actions: []
+    properties:
+      - humidity
+
+  - appliance_id: havcs.sensor_bh1750_illuminance_e8db84964042
+    name: 童童房间照度
+    type: sensor
+    entity_id: sensor.esp8266_d1mini_e8db84964042_bh1750_illuminance
+    actions: []
+    properties: []
+
+  - appliance_id: havcs.sensor_ds18b20_temperature_4855196a5e5e
+    name: 鱼缸水温
+    type: sensor
+    entity_id: sensor.esp8266_01s_4855196a5e5e_ds18b20_temperature
+    actions: []
+    properties:
+      - temperatureReading
+
+  - appliance_id: havcs.switch_s3_mogai_01s_4855196a5e84
+    name: 鱼缸灯
+    type: switch
+    entity_id: switch.esp8266_01s_4855196a5e84_relay
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.xiaomi_a1
+    name: 水草灯
+    type: switch
+    entity_id: switch.chuangmi_m3_b440_switch
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.xiaomi_c2
+    name: 鱼缸加热棒
+    type: switch
+    entity_id: switch.cuco_v3_927d_switch
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.xiaomi_c3
+    name: 小鱼缸灯
+    type: switch
+    entity_id: switch.cuco_v3_13ad_switch
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState
+
+  - appliance_id: havcs.xiaomi_c4
+    name: 蜗牛
+    type: switch
+    entity_id: switch.cuco_v3_755e_switch
+    actions:
+      - turnOn
+      - turnOff
+    properties:
+      - turnOnState

@@ -1,7 +1,7 @@
 {
   "domain": "xiaodu_voice_control",
   "name": "XiaoDu Voice Control",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "documentation": "https://github.com/demon3434/xiaodu_voice_control",
   "issue_tracker": "https://github.com/demon3434/xiaodu_voice_control/issues",
   "iot_class": "local_polling",

@@ -33,15 +33,11 @@ class XiaoduVoiceControlManager:
 
     @property
     def service_url(self) -> str:
-        if self._entry_data.get(CONF_SERVICE_URL):
-            return str(self._entry_data.get(CONF_SERVICE_URL, "")).rstrip("/")
         yaml_data = self._hass.data.get(DOMAIN, {}).get(DATA_YAML_DATA, {})
         return str(yaml_data.get(CONF_SERVICE_URL, "")).rstrip("/")
 
     @property
     def internal_api_token(self) -> str:
-        if self._entry_data.get(CONF_INTERNAL_API_TOKEN):
-            return str(self._entry_data.get(CONF_INTERNAL_API_TOKEN, ""))
         yaml_data = self._hass.data.get(DOMAIN, {}).get(DATA_YAML_DATA, {})
         return str(yaml_data.get(CONF_INTERNAL_API_TOKEN, ""))
 

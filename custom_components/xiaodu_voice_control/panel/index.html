@@ -260,6 +260,12 @@
     .form { padding: 0 24px 24px; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .field.full { grid-column: 1 / -1; }
+    .drawer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      padding-top: 16px;
+    }
     .modal-card {
       position: absolute;
       top: 50%;
@@ -285,7 +291,6 @@
       flex: 1;
       padding: 20px 24px 16px;
       background: #fff;
-      border-bottom: 1px solid #f1d9cf;
     }
     .modal-danger-chip {
       display: inline-flex;
@@ -324,11 +329,18 @@
       border-top: 1px solid var(--line);
       padding-top: 16px;
     }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      padding: 16px 32px 24px;
+    }
     .delete-summary {
       border: 1px solid #f1d9cf;
       border-radius: 18px;
       background: #fffaf8;
       overflow: hidden;
+      margin-top: 10px;
     }
     .delete-summary-head {
       display: grid;
@@ -370,6 +382,12 @@
       gap: 14px 16px;
     }
     .config-grid .field.full { grid-column: 1 / -1; }
+    .drawer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      padding-top: 16px;
+    }
   </style>
 </head>
 <body>
@@ -522,7 +540,7 @@
             <div id="properties-options" class="capability-box"></div>
           </div>
         </div>
-        <div class="toolbar" style="padding:16px 0 0;">
+        <div class="drawer-actions">
           <button class="btn btn-primary" id="save-device">保存设备</button>
           <button class="btn btn-secondary" id="reset-form">清空表单</button>
         </div>

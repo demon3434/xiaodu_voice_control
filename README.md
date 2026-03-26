@@ -126,7 +126,7 @@ xiaodu_open_uids: []
 - `xiaodu_client_secret`
   小度技能平台里配置的 `ClientSecret`
 - `xiaodu_open_uids`
-  已捕获到的授权用户 `openUid` 列表。通常不需要手填，程序会自动记录
+  已捕获到的授权用户 `openUid` 列表。通常不需要手填，在 `小度技能平台` 授权成功后，再到 `模拟测试` 界面，输入 `发现设备` ，程序会自动记录 `openUid` 
 
 ## 四、HA 页面里做什么
 

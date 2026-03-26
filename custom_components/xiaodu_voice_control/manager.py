@@ -18,6 +18,7 @@ from .const import (
     DATA_DEVICE_STORE,
     DATA_ENTRY_DATA,
     DATA_YAML_DATA,
+    DEFAULT_SERVICE_URL,
     DEVICES_YAML_FILENAME,
     DOMAIN,
 )
@@ -34,7 +35,7 @@ class XiaoduVoiceControlManager:
     @property
     def service_url(self) -> str:
         yaml_data = self._hass.data.get(DOMAIN, {}).get(DATA_YAML_DATA, {})
-        return str(yaml_data.get(CONF_SERVICE_URL, "")).rstrip("/")
+        return str(yaml_data.get(CONF_SERVICE_URL) or DEFAULT_SERVICE_URL).rstrip("/")
 
     @property
     def internal_api_token(self) -> str:
@@ -117,7 +118,7 @@ class XiaoduVoiceControlManager:
         if merged_open_uids != yaml_open_uids:
             yaml_config = await self.async_save_yaml_config({CONF_XIAODU_OPEN_UIDS: merged_open_uids})
         return {
-            "service_url": self.service_url,
+            "service_url": str(yaml_config.get(CONF_SERVICE_URL) or DEFAULT_SERVICE_URL).rstrip("/"),
             "devices_yaml": DEVICES_YAML_FILENAME,
             "xiaodu_skill_id": yaml_config.get(CONF_XIAODU_SKILL_ID, ""),
             "xiaodu_client_secret": yaml_config.get(CONF_XIAODU_CLIENT_SECRET, ""),
@@ -130,7 +131,11 @@ class XiaoduVoiceControlManager:
         yaml_config = await self.async_get_yaml_config()
         skill_id = str(payload.get(CONF_XIAODU_SKILL_ID, "")).strip()
         client_secret = str(payload.get(CONF_XIAODU_CLIENT_SECRET, yaml_config.get(CONF_XIAODU_CLIENT_SECRET, ""))).strip()
-        service_url = str(payload.get(CONF_SERVICE_URL, yaml_config.get(CONF_SERVICE_URL, self.service_url))).strip()
+        service_url = str(
+            payload.get(CONF_SERVICE_URL)
+            or yaml_config.get(CONF_SERVICE_URL)
+            or DEFAULT_SERVICE_URL
+        ).strip()
         new_internal_token = str(payload.get(CONF_INTERNAL_API_TOKEN, yaml_config.get(CONF_INTERNAL_API_TOKEN, self.internal_api_token))).strip()
         open_uids = [
             str(item).strip()
@@ -138,7 +143,8 @@ class XiaoduVoiceControlManager:
             if str(item).strip()
         ]
         await self.async_push_runtime_settings(
-            auth_token=self.internal_api_token,
+            auth_token=new_internal_token or self.internal_api_token,
+            service_url=service_url,
             payload_override={
                 "xiaodu_skill_id": skill_id,
                 "xiaodu_client_secret": client_secret,
@@ -167,9 +173,11 @@ class XiaoduVoiceControlManager:
         self,
         *,
         auth_token: str | None = None,
+        service_url: str | None = None,
         payload_override: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         yaml_config = await self.async_get_yaml_config()
+        target_service_url = str(service_url or yaml_config.get(CONF_SERVICE_URL) or DEFAULT_SERVICE_URL).rstrip("/")
         session = async_get_clientsession(self._hass, verify_ssl=False)
         headers = {
             "Content-Type": "application/json",
@@ -184,7 +192,7 @@ class XiaoduVoiceControlManager:
         if payload_override:
             payload.update(payload_override)
         async with session.put(
-            f"{self.service_url}/internal/settings",
+            f"{target_service_url}/internal/settings",
             headers=headers,
             data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
         ) as response:

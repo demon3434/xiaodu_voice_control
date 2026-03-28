@@ -812,20 +812,16 @@
       editOpenUidsEl.textContent = editable ? "锁定" : "修改";
     }
 
-    function getHaObject() {
+    function getHaAccessToken() {
       try {
         const root =
           window.parent?.document?.querySelector("body > home-assistant") ||
           window.parent?.document?.querySelector("home-assistant");
-        return root?.hass || root?.shadowRoot?.querySelector("home-assistant-main")?.hass || null;
+        const hass = root?.hass || root?.shadowRoot?.querySelector("home-assistant-main")?.hass;
+        return hass?.auth?.data?.accessToken || hass?.auth?.data?.access_token || hass?.auth?.accessToken || "";
       } catch (error) {
-        return null;
+        return "";
       }
-    }
-
-    function getHaAccessToken() {
-      const hass = getHaObject();
-      return hass?.auth?.data?.accessToken || hass?.auth?.data?.access_token || hass?.auth?.accessToken || "";
     }
 
     async function readJson(response) {
@@ -838,33 +834,12 @@
     }
 
     async function fetchJson(url, options = {}) {
-      const hass = getHaObject();
-      const method = (options.method || "GET").toUpperCase();
-      if (hass?.callApi) {
-        const headers = { ...(options.headers || {}) };
-        let body = options.body;
-        if (typeof body === "string" && headers["Content-Type"] === "application/json") {
-          try {
-            body = JSON.parse(body);
-          } catch (error) {
-            // Keep the original body and fall back to fetch below.
-          }
-        }
-        if (typeof body !== "string" || !headers["Content-Type"] || headers["Content-Type"] === "application/json") {
-          try {
-            return await hass.callApi(method, url, body ?? undefined, headers);
-          } catch (error) {
-            const message = error?.body?.message || error?.message || String(error);
-            throw new Error(message);
-          }
-        }
-      }
       const headers = new Headers(options.headers || {});
       const token = getHaAccessToken();
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-      const response = await fetch(url, { ...options, headers, credentials: "same-origin" });
+      const response = await fetch(url, { ...options, headers });
       const payload = await readJson(response);
       if (!response.ok) {
         throw new Error(payload.error || payload.message || JSON.stringify(payload));
